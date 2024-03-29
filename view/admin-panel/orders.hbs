@@ -1,0 +1,96 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders Statistics and total revenue</h5>
+          <p class="card-text">Total orders revenue: ${{totalRevenue}}</p>
+          <p class="card-text">Total delivered products revenue: ${{totalDeliveredOrdersSum}}</p>
+          <p class="card-text">Total active orders sum: ${{totalActiveOrdersSum}}</p>
+          <p class="card-text">Total sold products quantity: {{totalSoldProductsQuantity}}</p>
+          <p class="card-text">Total Orders: {{orders.length}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Orders List</h5>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Region</th>
+                <th scope="col">Selected Product</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#if orders}}
+              {{#each orders}}
+              <tr>
+                <td>{{dataValues.customer}}</td>
+                <td>{{dataValues.phone}}</td>
+                <td>{{dataValues.region}}</td>
+                <td><button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#seeProduct{{dataValues.id}}">
+                    See
+                  </button>
+                  <div class="modal fade" id="seeProduct{{dataValues.id}}" tabindex="-1"
+                    aria-labelledby="addProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="">Order</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card mb-4">
+                            <img src="{{dataValues.product.dataValues.image}}" class="card-img-top"
+                              style="width: 100%; height:300px; object-fit:cover;" alt="Product 1">
+                            <div class="card-body">
+                              <h5 class="card-title">{{product.dataValues.title}}</h5>
+                              <p class="card-text">${{product.dataValues.amount}}</p>
+                              <p class="card-text">Description: {{product.dataValues.description}}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <form action="/order/update/{{dataValues.id}}" method="post"
+                            enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="status" value="denied">
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Deny</button>
+                          </form>
+                          <form action="/order/update/{{dataValues.id}}" method="post"
+                            enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="status" value="accepted">
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Accept</button>
+                          </form>
+                          <form action="/order/update/{{dataValues.id}}" method="post"
+                            enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="status" value="delivered">
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Delivered</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td><span class="badge bg-primary">{{dataValues.status}}</span></td>
+              </tr>
+              {{/each}}
+              {{/if}}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

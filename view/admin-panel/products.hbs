@@ -1,0 +1,171 @@
+<div class="container mt-4">
+  <div class="row">
+        <button type="button" class="btn w-auto btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+          Add product
+        </button>
+      </div>
+    
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Products table</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Actions</th>
+                  <th scope="col">Comments</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each products}}
+                <tr class="h-100">
+                  <td>{{dataValues.title}}</td>
+                  <td>${{dataValues.amount}}</td>
+                  <td><img src="{{dataValues.image}}" alt="" style="max-width: 100px; height:100px;"></td>
+                  <td>{{dataValues.description}}</td>
+                  <td>
+                    <button class="btn btn-sm btn-success mb-2 w-100" data-bs-toggle="modal"
+                      data-bs-target="#updateP{{dataValues.id}}">Edit</button>
+                    <form action="/admin/products/delete/{{dataValues.id}}" method="post">
+                      <button class="btn btn-sm btn-danger w-100" type="submit">Delete</button>
+                    </form>
+                    
+                  </td>
+                  <td>
+                      <button class="btn btn-sm w-100 btn-primary" type="submit"  data-bs-toggle="modal"
+                      data-bs-target="#comments{{dataValues.id}}">See</button>
+                      <div class="modal fade" id="comments{{dataValues.id}}" tabindex="-1" aria-labelledby="comments"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">Comments</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Email</th>
+                              <th>Izoh</th>
+                              <th>Amallar</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {{#each comments}}
+                            <tr>
+                              <td>{{dataValues.email}}</td>
+                              <td>{{dataValues.text}}</td>
+                              <td>
+                                <form action="/comment/delete/{{dataValues.id}}" method="post" enctype="application/x-www-form-urlencoded">
+                                <button class="btn btn-danger" type="submit">Delete</button></form>
+                              </td>
+                            </tr>
+                            {{/each}}
+                          </tbody>
+                        </table>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+                  </td>
+                </tr>
+               
+                </td>
+                </tr>
+                
+                <div class="modal fade" id="updateP{{dataValues.id}}" tabindex="-1" aria-labelledby="addProductModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">Update product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/admin/products/update/{{dataValues.id}}" method="post"
+                          enctype="multipart/form-data">
+                          <div class="mb-3">
+                            <label for="productName" class="form-label">Name</label>
+                            <input required type="text" class="form-control" name="title" id="productName"
+                              >
+                          </div>
+                          <div class="mb-3">
+                            <label for="productImage" class="form-label">Image</label>
+                            <input required type="file" class="form-control" name="image" id="productImage"
+                              >
+                          </div>
+                          <div class="mb-3">
+                            <label for="productDescription" class="form-label">Tavsif</label>
+                            <textarea required class="form-control" name="description" id="productDescription" rows="3"
+                              p></textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input required type="number" class="form-control" name="amount" id="productPrice"
+                              >
+                          </div>
+                          <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                 
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addProductModalLabel">Add product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/admin/products/create-product" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="productName" class="form-label">Name</label>
+              <input required type="text" class="form-control" name="title" id="productName"
+                >
+            </div>
+            <div class="mb-3">
+              <label for="productImage" class="form-label">Image</label>
+              <input required type="file" class="form-control" name="image" id="productImage"
+                >
+            </div>
+            <div class="mb-3">
+              <label for="productDescription" class="form-label">Description</label>
+              <textarea required class="form-control" name="description" id="productDescription" rows="3"
+                ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Price</label>
+              <input required type="number" class="form-control" name="amount" id="productPrice"
+                >
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

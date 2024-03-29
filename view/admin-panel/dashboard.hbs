@@ -1,0 +1,32 @@
+  <div class="container mt-4">
+    <div class="d-flex align-items-center w-100 justify-content-between">
+      <form action="/auth/logout" method="post" >
+      <button class="btn btn-primary  mb-5" type="submit">Logout</button></form>
+      <h6><i class="fas fa-user"></i> {{user.firstName}} {{user.lastName}}</h6>
+      </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Products
+          </div>
+          <div class="card-body">
+            <p class="card-text">Manage your products here.</p>
+            <a href="dashboard/products" class="btn btn-primary">View Products</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Orders
+          </div>
+          <div class="card-body">
+            <p class="card-text">Manage orders from users.</p>
+            <a href="/order/dashboard/orders" class="btn btn-primary">View Orders</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
